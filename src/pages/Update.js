@@ -29,6 +29,9 @@ export default function Update({ route, navigation }) {
         },
       })
       .then((resp) => {
+        setStateProdName(resp.data.name)
+        setStateProdQuant(resp.data.quantity + "")
+        setStateProdPrice(resp.data.price + "")
         console.log(resp.data);
       });
   };
@@ -56,34 +59,39 @@ export default function Update({ route, navigation }) {
         <View style={styles.midleContentContainer}>
           <TextInput
             style={styles.textInput}
-            placeholder="Nome do Produto"
+            placeholder={stateProdName}
+            value={stateUpdateProdName}
             onChangeText={(newValue) => {
-              setStateProdName(newValue)
+              setStateUpdateProdName(newValue)
               console.log(newValue);
             }}
           />
 
           <TextInput
             style={styles.textInput}
-            placeholder="Quantidade do Produto"
+            placeholder={stateProdQuant}
+            value={stateUpdateProdQuant}
             onChangeText={(newValue) => {
-              setStateProdQuant(newValue)
+              setStateUpdateProdQuant(newValue)
               console.log(newValue);
             }}
+            keyboardType="numeric"
           />
           <TextInput
             style={styles.textInput}
-            placeholder="Preço do Produto"
+            placeholder={stateProdPrice}
+            value={stateUpdateProdPrice}
             onChangeText={(newValue) => {
-              setStateProdPrice(newValue)
+              setStateUpdateProdPrice(newValue)
               console.log(newValue);
             }}
+            keyboardType="numeric"
           />
           <Button
             style={styles.button}
             title="Test"
             color="#6700B3"
-            onPress={handleFindById}
+            onPress={handleUpdateProduct}
           />
         </View>
       </View>
@@ -124,7 +132,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     color: "#6700B3",
-    borderBottomWidth: 0.4,
+    borderBottomWidth: 1,
+    borderColor: "#6700B3",
     width: 200,
     paddingLeft: 4,
     marginBottom: 20,
