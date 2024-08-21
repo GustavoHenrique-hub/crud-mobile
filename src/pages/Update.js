@@ -1,0 +1,132 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Button, StyleSheet, Text, View, TextInput } from "react-native";
+
+export default function Update({ route, navigation }) {
+  //STATES FOR SAVE THE API REQUEST DATA
+  const [stateProdName, setStateProdName] = useState();
+  const [stateProdQuant, setStateProdQuant] = useState();
+  const [stateProdPrice, setStateProdPrice] = useState();
+
+  //STATE FOR UPDATE THE NEW DATA
+  const [stateUpdateProdName, setStateUpdateProdName] = useState();
+  const [stateUpdateProdQuant, setStateUpdateProdQuant] = useState();
+  const [stateUpdateProdPrice, setStateUpdateProdPrice] = useState();
+
+  const prodId = route.params;
+
+  useEffect(() => {
+    handleFindById(); // Chama a função ao carregar a tela
+  }, []); // O array vazio [] faz com que a função seja chamada apenas uma vez ao montar o componente
+
+  const handleFindById = () => {
+    const findByIdReqUrl = `http://192.168.200.31:8080/product/findById/${prodId.id}`;
+
+    axios
+      .get(findByIdReqUrl, {
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .then((resp) => {
+        console.log(resp.data);
+      });
+  };
+
+  const handleUpdateProduct = () => {
+    const updateReqUrl = `http://192.168.200.31:8080/product/update/${prodId.id}`;
+
+    axios.put(updateReqUrl, {});
+  };
+
+  console.log(prodId.id);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <View style={styles.topContainerLeft}>
+          <Button
+            title="Back"
+            color="#6700B3"
+            onPress={() => navigation.navigate("List")}
+          />
+        </View>
+      </View>
+      <View style={styles.midleScreenContent}>
+        <View style={styles.midleContentContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Nome do Produto"
+            onChangeText={(newValue) => {
+              setStateProdName(newValue)
+              console.log(newValue);
+            }}
+          />
+
+          <TextInput
+            style={styles.textInput}
+            placeholder="Quantidade do Produto"
+            onChangeText={(newValue) => {
+              setStateProdQuant(newValue)
+              console.log(newValue);
+            }}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Preço do Produto"
+            onChangeText={(newValue) => {
+              setStateProdPrice(newValue)
+              console.log(newValue);
+            }}
+          />
+          <Button
+            style={styles.button}
+            title="Test"
+            color="#6700B3"
+            onPress={handleFindById}
+          />
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#D7A1FF",
+    display: "flex",
+  },
+  topContainer: {
+    marginTop: 40,
+    height: 60,
+    padding: 10,
+    justifyContent: "center",
+  },
+  topContainerLeft: {
+    width: 60,
+  },
+  topContainerRight: {},
+  midleScreenContent: {
+    justifyContent:"center",
+    alignItems: "center",
+    marginTop: 200,
+    marginLeft: 70,
+    backgroundColor: "#fff",
+    width: 250,
+    height: 300,
+    borderRadius: 20,
+
+  },
+  midleContentContainer: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  textInput: {
+    color: "#6700B3",
+    borderBottomWidth: 0.4,
+    width: 200,
+    paddingLeft: 4,
+    marginBottom: 20,
+  },
+});
