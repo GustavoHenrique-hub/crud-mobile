@@ -1,8 +1,13 @@
 import { StyleSheet, Text, View, FlatList, Button, Alert } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function List({ navigation }) {
+
+  useEffect(() => {
+    handleFindAll(); // Chama a função ao carregar a tela
+  }, []); // O array vazio [] faz com que a função seja chamada apenas uma vez ao montar o componente
+
   //ARRAYS TO READ ALL DATA
   const [stateArray, setStateArray] = useState([]);
   const tempArray = [];
@@ -11,7 +16,7 @@ export default function List({ navigation }) {
   const [stateId, setStateId] = useState();
 
   const handleFindAll = () => {
-    const findAllReqUrl = `http://192.168.200.31:8080/product/findAll`;
+    const findAllReqUrl = `http://192.168.43.163:8080/product/findAll`;
 
     axios
       .get(findAllReqUrl, {
@@ -38,7 +43,7 @@ export default function List({ navigation }) {
   };
 
   const handleDeleteProduct = (id) => {
-    const deleteReqUrl = `http://192.168.200.31:8080/product/delete/${id}`;
+    const deleteReqUrl = `http://192.168.43.163:8080/product/delete/${id}`;
 
     axios
       .delete(deleteReqUrl)
@@ -71,7 +76,7 @@ export default function List({ navigation }) {
       <View style={styles.containerMenu}>
         <Button
           onPress={handleFindAll}
-          title="List All"
+          title="Refresh"
           accessibilityLabel="CLICK ME"
           color="#6700B3"
         />

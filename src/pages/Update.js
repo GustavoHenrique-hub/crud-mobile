@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Button, StyleSheet, Text, View, TextInput } from "react-native";
+import { Button, StyleSheet, Text, View, TextInput, Alert } from "react-native";
 
 export default function Update({ route, navigation }) {
   //STATES FOR SAVE THE API REQUEST DATA
@@ -20,7 +20,7 @@ export default function Update({ route, navigation }) {
   }, []); // O array vazio [] faz com que a função seja chamada apenas uma vez ao montar o componente
 
   const handleFindById = () => {
-    const findByIdReqUrl = `http://192.168.200.31:8080/product/findById/${prodId.id}`;
+    const findByIdReqUrl = `http://192.168.43.163:8080/product/findById/${prodId.id}`;
 
     axios
       .get(findByIdReqUrl, {
@@ -33,13 +33,49 @@ export default function Update({ route, navigation }) {
         setStateProdQuant(resp.data.quantity + "")
         setStateProdPrice(resp.data.price + "")
         console.log(resp.data);
+      }).catch((error) => {
+        console.log(error.message)
       });
   };
 
   const handleUpdateProduct = () => {
-    const updateReqUrl = `http://192.168.200.31:8080/product/update/${prodId.id}`;
+    const updateReqUrl = `http://192.168.43.163:8080/product/update/${prodId.id}`;
 
-    axios.put(updateReqUrl, {});
+    axios
+      .put(
+        updateReqUrl,
+        {
+          name: stateUpdateProdName,
+          quantity: stateUpdateProdQuant,
+          price: stateUpdateProdPrice,
+        },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp.data);
+        Alert.alert("AVISO", "PRODUTO ATUALIZADO COM SUCESSO!!", [
+          {
+            text: "Entendido",
+            onPress: () => {
+              setStateUpdateProdName("");
+              setStateUpdateProdQuant("");
+              setStateUpdateProdPrice("");
+            },
+          },
+        ]);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        Alert.alert("ERRO!", "PRODUTO NÃO ATUALIZADO!!", [
+          {
+            text: "Entendido",
+          },
+        ]);
+      });
   };
 
   console.log(prodId.id);
@@ -89,7 +125,7 @@ export default function Update({ route, navigation }) {
           />
           <Button
             style={styles.button}
-            title="Test"
+            title="Submit"
             color="#6700B3"
             onPress={handleUpdateProduct}
           />
