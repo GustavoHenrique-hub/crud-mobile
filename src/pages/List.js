@@ -16,7 +16,7 @@ export default function List({ navigation }) {
   const [stateId, setStateId] = useState();
 
   const handleFindAll = () => {
-    const findAllReqUrl = `http://192.168.43.163:8080/product/findAll`;
+    const findAllReqUrl = `https://test-docker-repository.onrender.com/product/findAll`;
 
     axios
       .get(findAllReqUrl, {
@@ -43,7 +43,7 @@ export default function List({ navigation }) {
   };
 
   const handleDeleteProduct = (id) => {
-    const deleteReqUrl = `http://192.168.43.163:8080/product/delete/${id}`;
+    const deleteReqUrl = `https://test-docker-repository.onrender.com/product/delete/${id}`;
 
     axios
       .delete(deleteReqUrl)

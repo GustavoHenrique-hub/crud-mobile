@@ -20,7 +20,7 @@ export default function Update({ route, navigation }) {
   }, []); // O array vazio [] faz com que a função seja chamada apenas uma vez ao montar o componente
 
   const handleFindById = () => {
-    const findByIdReqUrl = `http://192.168.43.163:8080/product/findById/${prodId.id}`;
+    const findByIdReqUrl = `https://test-docker-repository.onrender.com/product/findById/${prodId.id}`;
 
     axios
       .get(findByIdReqUrl, {
@@ -39,7 +39,7 @@ export default function Update({ route, navigation }) {
   };
 
   const handleUpdateProduct = () => {
-    const updateReqUrl = `http://192.168.43.163:8080/product/update/${prodId.id}`;
+    const updateReqUrl = `https://test-docker-repository.onrender.com/product/update/${prodId.id}`;
 
     axios
       .put(

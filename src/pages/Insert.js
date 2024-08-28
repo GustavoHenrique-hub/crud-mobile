@@ -8,7 +8,7 @@ export default function Insert() {
   const [stateProdPrice, setStateProdPrice] = useState();
 
   const handleAddProduct = () => {
-    const insertReqUrl = `http://192.168.43.163:8080/product/insert`;
+    const insertReqUrl = `https://test-docker-repository.onrender.com/product/insert`;
 
     axios
       .post(

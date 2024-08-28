@@ -9,7 +9,7 @@ export default function FindById() {
   const [stateProdPrice, setStateProdPrice] = useState();
 
   const handleFindById = () => {
-    const findByIdReqUrl = `http://192.168.43.163:8080/product/findById/${stateProdId}`;
+    const findByIdReqUrl = `https://test-docker-repository.onrender.com/product/findById/${stateProdId}`;
 
     axios
       .get(findByIdReqUrl, {
@@ -72,15 +72,22 @@ export default function FindById() {
         </View>
         <View style={styles.midleScreenContent}>
           <View style={styles.midleContentContainer}>
-            <Text style={styles.textResponse}>
-              {`Nome do Produto: ${stateProdName}`}
-            </Text>
-            <Text
-              style={styles.textResponse}
-            >{`Quantidade do Produto: ${stateProdQuant}`}</Text>
-            <Text style={styles.textResponse}>
-              {`Preço do Produto: ${stateProdPrice}`}
-            </Text>
+            { stateProdName ? 
+              <>
+                <Text style={styles.textResponse}>
+                  {`Nome do Produto: ${stateProdName}`}
+                </Text>
+                <Text
+                  style={styles.textResponse}
+                >{`Quantidade do Produto: ${stateProdQuant}`}</Text>
+                <Text style={styles.textResponse}>
+                  {`Preço do Produto: ${stateProdPrice}`}
+                </Text>
+              </>
+            : 
+                <Text style={styles.textResponse}>
+                  {`PESQUISE O PRODUTO`}
+                </Text>}
           </View>
         </View>
       </View>
